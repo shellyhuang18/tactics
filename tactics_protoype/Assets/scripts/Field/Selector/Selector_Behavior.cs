@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Collections.Specialized;
+using Chara = Character;
 
 public class Selector_Behavior : MonoBehaviour {
 
@@ -12,6 +13,8 @@ public class Selector_Behavior : MonoBehaviour {
 	private int ray_count;
 
 	GameObject menu;
+
+	Chara selected_char;
 	// Use this for initialization
 	void Awake () {
 		has_moved = false;
@@ -22,19 +25,27 @@ public class Selector_Behavior : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		//onnly able to move selector when menu not open
 		if (!menu.GetComponent<Menu_Selection> ().activate_menu) {
 			Move ();
 		}
-
 		HighlightBlock ();
+		DetectObject ();
 	}
 		
 
 	void DetectObject(){
 		RaycastHit hit;
+
 		if (Physics.Raycast (transform.position, transform.TransformDirection (Vector3.down), out hit, Mathf.Infinity)) {
 			if (hit.collider.gameObject.tag == "character") {
+				if (Input.GetKeyDown ("s")) {
+					menu.GetComponent<Menu_Selection> ().OpenMenu ();
 
+					//temporary definition of character
+					selected_char = new Chara();
+					selected_char.character = hit.collider.gameObject;
+				}
 			}
 		}
 	}
