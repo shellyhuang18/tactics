@@ -5,23 +5,39 @@ using System.Collections.Specialized;
 
 public class Selector_Behavior : MonoBehaviour {
 
-	GameObject raycast_hit;
-	Color raycast_hit_color;
-	bool has_moved;
+	private GameObject raycast_hit;
+	private Color raycast_hit_color;
 
-	int ray_count;
+	private bool has_moved;
+	private int ray_count;
+
+	GameObject menu;
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		has_moved = false;
 		ray_count = 0;
+
+		menu = GameObject.Find ("Panel");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		Move ();
+		if (!menu.GetComponent<Menu_Selection> ().activate_menu) {
+			Move ();
+		}
+
 		HighlightBlock ();
 	}
+		
 
+	void DetectObject(){
+		RaycastHit hit;
+		if (Physics.Raycast (transform.position, transform.TransformDirection (Vector3.down), out hit, Mathf.Infinity)) {
+			if (hit.collider.gameObject.tag == "character") {
+
+			}
+		}
+	}
 
 
 	void HighlightBlock(){
@@ -35,12 +51,11 @@ public class Selector_Behavior : MonoBehaviour {
 		if (Physics.Raycast (transform.position, transform.TransformDirection (Vector3.down), out hit, Mathf.Infinity, layer_mask)) {
 			
 			if (has_moved && (raycast_hit_color != null)) {
-				Debug.Log ("moved");
 				raycast_hit.GetComponent<Renderer> ().material.color = raycast_hit_color;
 				ray_count = 0;
 			}
 
-			//on first raycast hit an object so color stored is original color (not color it was just chhanged to)
+			//on first instance raycast hits an object 
 			if (ray_count == 0) {
 				raycast_hit = hit.collider.gameObject;
 				raycast_hit_color = raycast_hit.GetComponent<Renderer> ().material.color;
