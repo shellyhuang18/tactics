@@ -14,7 +14,7 @@ public class Selector_Behavior : MonoBehaviour {
 
 	GameObject menu;
 
-	Chara selected_char;
+	public Chara selected_char;
 	// Use this for initialization
 	void Awake () {
 		has_moved = false;
@@ -44,7 +44,7 @@ public class Selector_Behavior : MonoBehaviour {
 
 					//temporary definition of character
 					selected_char = new Chara();
-					selected_char.character = hit.collider.gameObject;
+					selected_char.char_gameobj = hit.collider.gameObject;
 				}
 			}
 		}

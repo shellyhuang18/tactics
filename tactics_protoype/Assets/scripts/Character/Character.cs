@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 public class Character {
-	public GameObject character;
+	public GameObject char_gameobj;
 
 	private int hp;
 	private int mp;
@@ -19,6 +19,17 @@ public class Character {
 	private int jump;
 
 	private int speed;
+
+	public int getHp(){ return this.hp; }
+	public int getMp(){ return this.mp; }
+	public float getStrength(){	return this.strength; }
+	public float getMagic(){ return this.magic; }
+	public float getMdef(){ return this.mdef; }
+	public float getDef() { return this.def; }
+	public int getMove(){ return this.move; }
+	public int getJump(){ return this.jump; }
+	public int getSpeed(){ return this.speed; }
+	
 
 	public Character(){
 		this.hp = 10;
