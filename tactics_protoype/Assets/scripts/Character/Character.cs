@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Character {
-	public GameObject char_gameobj;
-
+public class Character : MonoBehaviour{
 	private int hp;
 	private int mp;
 
@@ -16,7 +14,7 @@ public class Character {
 	private float def;
 
 	private int move;
-	private int jump;
+	private float jump;
 
 	private int speed;
 
@@ -27,10 +25,12 @@ public class Character {
 	public float getMdef(){ return this.mdef; }
 	public float getDef() { return this.def; }
 	public int getMove(){ return this.move; }
-	public int getJump(){ return this.jump; }
+	public float getJump(){ return this.jump; }
 	public int getSpeed(){ return this.speed; }
 	
-
+	public void setMove(int move){
+		this.move = move;
+	}
 	public Character(){
 		this.hp = 10;
 		this.mp = 0;
@@ -38,7 +38,7 @@ public class Character {
 		this.magic = 1;
 		this.mdef = 1;
 		this.def = 1;
-		this.move = 1;
+		this.move = 3;
 		this.jump = 1;
 		this.speed = 1;
 	}

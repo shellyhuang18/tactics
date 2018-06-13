@@ -7,10 +7,13 @@ using UnityEngine.UI;
 public class Menu_Selection : MonoBehaviour {
 	private GameObject menu;
 	public bool activate_menu;
+	private GameObject selector;
 
 	int i;
 	// Use this for initialization
 	void Start () {
+		selector = GameObject.Find ("Selector");
+
 		//menu iterator
 		i = 0;
 
@@ -29,7 +32,7 @@ public class Menu_Selection : MonoBehaviour {
 		if (Input.GetKeyDown ("i")) {
 			OpenMenu ();
 		}
-		if (activate_menu) {
+		if (selector.GetComponent<Selector_Behavior>().curr_char != null && activate_menu) {
 			MenuSelection ();
 		}
 	}
@@ -45,20 +48,48 @@ public class Menu_Selection : MonoBehaviour {
 			} 
 		}		
 		if (Input.GetKeyDown ("down")) {
-			i = (i+1) % 3;
+			i = (i + 1) % 3;
 		}
+			
+		cursor.transform.position = new Vector3 (cursor.transform.position.x, actions [i].transform.position.y + 10, 0);
 
-		cursor.transform.position = new Vector3 (cursor.transform.position.x, actions [i].transform.position.y+10, 0);
+
+		//move
+		if (i == 0 && Input.GetKeyDown ("d")) {
+					
+			selector.GetComponent<Selector_Behavior> ().curr_char.GetComponent<Move> ().DisplayMoveRange ();
+			CloseMenu ();
+					
+		}
+		/*//act
+			else if (i == 1 && Input.GetKeyDown("d")) {
+
+			} 
+			//wait
+			else if (i == 2 && Input.GetKeyDown("d")) {
+
+			}*/
+		
+	}
+	public void CloseMenu(){
+		activate_menu = false;
+
+		gameObject.GetComponent<Image> ().enabled = false;
+		foreach (Transform child in transform) {
+			child.gameObject.SetActive (false);
+		}
 	}
 
-
 	public void OpenMenu(){
-		activate_menu = !activate_menu;
-
-		gameObject.GetComponent<Image> ().enabled = activate_menu;
+		activate_menu = true;
+		gameObject.GetComponent<Image> ().enabled = true;
 		foreach (Transform child in transform) {
-			child.gameObject.SetActive (activate_menu);
+			child.gameObject.SetActive (true);
 		}
+
+
+
+
 	}
 
 

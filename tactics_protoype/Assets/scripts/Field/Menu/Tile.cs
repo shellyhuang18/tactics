@@ -13,8 +13,9 @@ public class Tile : MonoBehaviour {
 	public Tile parent = null;
 	public int distance = 0;
 
-	private List<Tile> adj_list = new List<Tile> ();
+	public List<Tile> adj_list = new List<Tile> ();
 
+	Color orig_color;
 	// Update is called once per frame
 	void Update () {
 		if (current) {
@@ -23,7 +24,7 @@ public class Tile : MonoBehaviour {
 			GetComponent<Renderer> ().material.color = Color.magenta;
 		} else if (selectable) {
 			GetComponent<Renderer> ().material.color = Color.blue;
-		}
+		} 
 	}
 
 	void Reset(){
@@ -38,7 +39,7 @@ public class Tile : MonoBehaviour {
 		distance = 0;
 	}
 
-	void FindNeighbors(float jump){
+	public void FindNeighbors(float jump){
 		Reset ();
 
 		CheckTile (Vector3.right, jump);
@@ -56,7 +57,7 @@ public class Tile : MonoBehaviour {
 
 		foreach (Collider c in cols) {
 			Tile tile = c.GetComponent<Tile> ();
-			if (tile != null && tile.walkable) {
+			if (tile != null/* && tile.walkable*/) {
 				RaycastHit hit;
 
 				//if there is something on the tile

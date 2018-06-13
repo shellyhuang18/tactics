@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Collections.Specialized;
-using Chara = Character;
 
 public class Selector_Behavior : MonoBehaviour {
 
@@ -14,7 +13,7 @@ public class Selector_Behavior : MonoBehaviour {
 
 	GameObject menu;
 
-	public Chara selected_char;
+	public GameObject curr_char;
 	// Use this for initialization
 	void Awake () {
 		has_moved = false;
@@ -40,11 +39,9 @@ public class Selector_Behavior : MonoBehaviour {
 		if (Physics.Raycast (transform.position, transform.TransformDirection (Vector3.down), out hit, Mathf.Infinity)) {
 			if (hit.collider.gameObject.tag == "character") {
 				if (Input.GetKeyDown ("s")) {
+					curr_char = hit.collider.gameObject;
 					menu.GetComponent<Menu_Selection> ().OpenMenu ();
 
-					//temporary definition of character
-					selected_char = new Chara();
-					selected_char.char_gameobj = hit.collider.gameObject;
 				}
 			}
 		}
